@@ -22,8 +22,8 @@ services:
       - RAG_API_URL=http://rag_api:${RAG_PORT:-8000}
     volumes:
       - type: bind
-          source: ./librechat.yaml
-          target: /app/librechat.yaml
+        source: ./librechat.yaml
+        target: /app/librechat.yaml
       # - ./.env:/app/.env
   mongodb:
     container_name: chat-mongodb
