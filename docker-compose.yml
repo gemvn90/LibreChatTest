@@ -21,19 +21,14 @@ services:
       - RAG_PORT=${RAG_PORT:-8000}
       - RAG_API_URL=http://rag_api:${RAG_PORT:-8000}
     volumes:
-      - type: bind
-        source: ./.env
-        target: /app/.env
-      - ./images:/app/client/public/images
-      - ./uploads:/app/uploads
-      - ./logs:/app/api/logs
+      - ./.env:/app/.env
   mongodb:
     container_name: chat-mongodb
     image: mongo
     restart: always
     user: "${UID}:${GID}"
     volumes:
-      - ./data-node:/data/db
+      - mongodata2:/data/db
     command: mongod --noauth
   meilisearch:
     container_name: chat-meilisearch
@@ -45,7 +40,7 @@ services:
       - MEILI_NO_ANALYTICS=true
       - MEILI_MASTER_KEY=${MEILI_MASTER_KEY}
     volumes:
-      - ./meili_data_v1.12:/meili_data
+      - meilidata2:/meili_data
   vectordb:
     container_name: vectordb
     image: ankane/pgvector:latest
@@ -68,3 +63,5 @@ services:
 
 volumes:
   pgdata2:
+  mongodata2:
+  meilidata2:
